@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filq — Earn. Watch. Withdraw.</title>
+<meta name="description" content="Filq is India's #1 earning app. Watch ads, complete tasks, refer friends and withdraw real money to UPI.">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #0f0e0b;
+  --ink2: #3d3b35;
+  --muted: #9c9a92;
+  --accent: #00c853;
+  --accent2: #00a844;
+  --soft: #eae8e2;
+  --border: #e2e0d8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Cabinet Grotesk', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 0 40px; height: 64px; display: flex; align-items: center;
+  background: #f5f3eecc; backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 22px; font-weight: 900; letter-spacing: -1px; flex: 1; cursor: pointer; text-decoration: none; color: var(--ink); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--ink2); text-decoration: none; transition: color .2s; cursor: pointer; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { background: var(--accent) !important; color: #fff !important; padding: 8px 20px; border-radius: 100px; font-weight: 700 !important; }
+.nav-hamburger { display: none; font-size: 22px; cursor: pointer; background: none; border: none; color: var(--ink); }
+.mobile-nav {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  z-index: 199; padding: 16px 24px; flex-direction: column; gap: 4px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { font-size: 15px; font-weight: 600; color: var(--ink2); text-decoration: none; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.mobile-nav a:last-child { border: none; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+@keyframes ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+/* HERO */
+#hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 100px 24px 60px;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 100px; padding: 6px 16px; font-size: 13px;
+  font-weight: 500; color: var(--ink2); margin-bottom: 32px;
+  animation: fadeUp .8s ease both;
+}
+.hero-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+.hero-h1 {
+  font-size: clamp(44px,8vw,88px); font-weight: 900; line-height: 1;
+  letter-spacing: -3px; max-width: 900px; margin-bottom: 24px;
+  animation: fadeUp .8s ease .1s both;
+}
+.hero-h1 em { font-family: 'Instrument Serif',serif; font-style: italic; font-weight: 400; color: var(--accent); }
+.hero-sub { font-size: clamp(16px,2vw,20px); color: var(--ink2); max-width: 520px; line-height: 1.6; margin-bottom: 40px; animation: fadeUp .8s ease .2s both; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; animation: fadeUp .8s ease .3s both; }
+.btn-primary { background: var(--accent); color: #fff; padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background .2s,transform .2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+.btn-secondary { background: var(--surface); color: var(--ink); padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--border); transition: border-color .2s,transform .2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-secondary:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+/* PHONE */
+.hero-phone { margin-top: 60px; position: relative; animation: fadeUp .8s ease .4s both; }
+.phone-wrap { width: 270px; height: 520px; background: var(--ink); border-radius: 40px; padding: 14px; box-shadow: 0 40px 80px #0000002a,0 0 0 1px #ffffff15 inset; margin: 0 auto; }
+.phone-screen { width: 100%; height: 100%; background: #0a0a0a; border-radius: 28px; overflow: hidden; }
+.phone-notch { width: 80px; height: 22px; background: var(--ink); border-radius: 0 0 14px 14px; margin: 0 auto 8px; }
+.app-bar { background: #111; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e1e1e; }
+.app-logo-s { font-size: 16px; font-weight: 900; color: var(--accent); }
+.coin-pill { background: #1e1e1e; border-radius: 100px; padding: 4px 10px; font-size: 10px; color: var(--accent); font-weight: 700; }
+.balance-box { background: var(--accent); margin: 10px; border-radius: 14px; padding: 14px; }
+.bal-label { font-size: 10px; color: rgba(0,0,0,.6); font-family: sans-serif; }
+.bal-amount { font-size: 26px; font-weight: 900; color: #fff; font-family: sans-serif; line-height: 1.2; }
+.bal-sub { font-size: 10px; color: rgba(0,0,0,.5); font-family: sans-serif; margin-top: 2px; }
+.task-row { margin: 0 10px 7px; background: #1a1a1a; border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; gap: 10px; }
+.task-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.task-name { font-size: 11px; color: #e0e0e0; font-family: sans-serif; font-weight: 600; }
+.task-coins { font-size: 10px; color: var(--accent); font-family: sans-serif; }
+.task-btn { background: var(--accent); color: #fff; border-radius: 6px; padding: 4px 9px; font-size: 10px; font-weight: 700; font-family: sans-serif; margin-left: auto; }
+.float-badge { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 9px 14px; font-size: 13px; font-weight: 700; white-space: nowrap; box-shadow: 0 8px 24px #0000001a; animation: float 3s ease-in-out infinite; }
+.fb-1 { top: 50px; left: -110px; animation-delay:0s; }
+.fb-2 { top: 210px; right: -110px; animation-delay:.5s; }
+.fb-3 { bottom: 70px; left: -100px; animation-delay:1s; }
+
+/* STATS */
+.stats-bar { background: var(--ink); padding: 40px; display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; }
+.stat-num { font-size: 40px; font-weight: 900; letter-spacing: -2px; color: var(--accent); line-height: 1; text-align: center; }
+.stat-label { font-size: 14px; color: #ffffff60; margin-top: 4px; text-align: center; }
+
+/* TICKER */
+.ticker-wrap { overflow: hidden; background: var(--accent); padding: 10px 0; }
+.ticker { display: flex; gap: 40px; animation: ticker 18s linear infinite; white-space: nowrap; }
+.ticker span { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.8); }
+.ticker span strong { color: #fff; }
+
+/* SECTIONS */
+.sw { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+.swd { padding: 100px 40px; background: var(--ink); }
+.swdi { max-width: 1100px; margin: 0 auto; }
+.eyebrow { font-size: 12px; letter-spacing: 2px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+.eyebrow-w { font-size: 12px; letter-spacing: 2px; font-weight: 700; color: #ffffff40; text-transform: uppercase; margin-bottom: 12px; }
+.sh2 { font-size: clamp(30px,4vw,50px); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 56px; }
+.sh2 em { font-family: 'Instrument Serif',serif; font-style: italic; font-weight: 400; color: var(--accent); }
+.sh2w { font-size: clamp(30px,4vw,50px); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 56px; color: #fff; }
+.sh2w em { font-family: 'Instrument Serif',serif; font-style: italic; font-weight: 400; color: var(--accent); }
+
+/* HOW IT WORKS */
+.steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+.step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 22px; position: relative; transition: transform .2s,box-shadow .2s; }
+.step-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px #0000000d; }
+.step-num { width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; margin-bottom: 14px; }
+.step-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+.step-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.step-desc { font-size: 14px; color: var(--ink2); line-height: 1.6; }
+.step-arrow { position: absolute; top: 50%; right: -14px; width: 28px; height: 28px; background: var(--soft); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); z-index: 1; transform: translateY(-50%); }
+.step-card:last-child .step-arrow { display: none; }
+
+/* EARN */
+.earn-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.earn-card { border-radius: 20px; padding: 28px; transition: transform .2s; }
+.earn-card:hover { transform: translateY(-4px); }
+.earn-card.g { background: #e8f8ef; border: 1px solid #b6e8cb; }
+.earn-card.o { background: #fff4ee; border: 1px solid #ffd4b8; }
+.earn-card.b { background: #eff5ff; border: 1px solid #bdd4f9; }
+.earn-card.p { background: #f3f0ff; border: 1px solid #d0c5f9; }
+.earn-card.y { background: #fffbea; border: 1px solid #fde89a; }
+.earn-card.r { background: #fff0f5; border: 1px solid #f9bdd4; }
+.earn-emoji { font-size: 38px; margin-bottom: 14px; display: block; }
+.earn-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+.earn-desc { font-size: 14px; color: var(--ink2); line-height: 1.6; margin-bottom: 14px; }
+.earn-badge { display: inline-flex; align-items: center; background: #fff; border-radius: 100px; padding: 5px 12px; font-size: 12px; font-weight: 700; color: var(--accent2); border: 1px solid #b6e8cb; }
+
+/* EARN DETAIL */
+.earn-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
+.edc { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+.edc-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.edc-ico { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.edc-title { font-size: 19px; font-weight: 900; letter-spacing: -.3px; }
+.edc-sub { font-size: 13px; color: var(--muted); }
+.edc-list { list-style: none; }
+.edc-list li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--ink2); line-height: 1.5; }
+.edc-list li:last-child { border: none; }
+.edc-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+.edc-coins { margin-left: auto; background: #e8f8ef; color: var(--accent2); border-radius: 100px; padding: 2px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+
+/* WITHDRAW */
+.wd-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.wd-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 20px; padding: 28px; text-align: center; transition: transform .2s,border-color .2s; }
+.wd-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.wd-icon { font-size: 38px; margin-bottom: 14px; display: block; }
+.wd-title { font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.wd-desc { font-size: 14px; color: #ffffff60; line-height: 1.6; }
+.wd-min { display: inline-block; margin-top: 14px; background: #00c85320; color: var(--accent); border-radius: 100px; padding: 4px 14px; font-size: 12px; font-weight: 700; }
+.wd-steps { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; margin-top: 56px; position: relative; }
+.wd-steps::before { content:''; position: absolute; top: 28px; left: 10%; right: 10%; height: 2px; background: #2a2a2a; z-index: 0; }
+.wd-step { text-align: center; position: relative; z-index: 1; }
+.wd-step-circle { width: 56px; height: 56px; border-radius: 50%; background: #1a1a1a; border: 2px solid #2a2a2a; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 14px; transition: border-color .3s; }
+.wd-step:hover .wd-step-circle { border-color: var(--accent); }
+.wd-step-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.wd-step-sub { font-size: 12px; color: #ffffff40; }
+.timing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
+.timing-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 14px; padding: 18px 20px; display: flex; align-items: center; gap: 14px; }
+.tc-icon { font-size: 22px; flex-shrink: 0; }
+.tc-method { font-size: 14px; font-weight: 700; color: #fff; }
+.tc-time { font-size: 12px; color: #ffffff50; margin-top: 2px; }
+.tc-badge { margin-left: auto; background: #00c85320; color: var(--accent); border-radius: 100px; padding: 3px 10px; font-size: 11px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+
+/* REFERRAL */
+.ref-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.ref-text h2 { font-size: clamp(30px,4vw,50px); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
+.ref-text h2 em { font-family: 'Instrument Serif',serif; font-style: italic; font-weight: 400; color: var(--accent); }
+.ref-text p { font-size: 16px; color: var(--ink2); line-height: 1.7; margin-bottom: 32px; }
+.ref-nums { display: flex; gap: 32px; margin-bottom: 36px; }
+.ref-num { font-size: 36px; font-weight: 900; letter-spacing: -2px; color: var(--accent); line-height: 1; }
+.ref-num-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.ref-visual { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 28px; }
+.ref-code-wrap { background: var(--soft); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.ref-code { font-size: 22px; font-weight: 900; letter-spacing: 3px; }
+.copy-btn { background: var(--ink); color: #fff; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; border: none; cursor: pointer; font-family: inherit; transition: background .2s; }
+.copy-btn:hover { background: var(--accent2); }
+.ref-friend { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.rf-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: #fff; flex-shrink: 0; }
+.rf-name { font-size: 14px; font-weight: 700; }
+.rf-time { font-size: 12px; color: var(--muted); }
+.rf-coins { font-size: 13px; font-weight: 700; color: var(--accent); margin-left: auto; }
+
+/* CTA */
+#cta { padding: 80px 40px; text-align: center; background: var(--accent); }
+#cta h2 { font-size: clamp(32px,5vw,60px); font-weight: 900; letter-spacing: -2px; color: #fff; margin-bottom: 14px; }
+#cta h2 em { font-family: 'Instrument Serif',serif; font-style: italic; color: rgba(255,255,255,.75); }
+#cta p { font-size: 18px; color: rgba(255,255,255,.8); margin-bottom: 36px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-white { background: #fff; color: var(--accent2); padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; transition: transform .2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-white:hover { transform: translateY(-2px); }
+.btn-ghost-w { background: transparent; color: #fff; padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 2px solid rgba(255,255,255,.5); transition: border-color .2s,transform .2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-ghost-w:hover { border-color: #fff; transform: translateY(-2px); }
+
+/* DOWNLOAD */
+#download { padding: 100px 40px; text-align: center; }
+.store-btns { display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+.store-btn { display: flex; align-items: center; gap: 12px; background: var(--ink); color: #fff; padding: 14px 28px; border-radius: 14px; text-decoration: none; border: 1px solid transparent; transition: transform .2s,border-color .2s; }
+.store-btn:hover { transform: translateY(-3px); border-color: #ffffff30; }
+.store-icon { font-size: 26px; }
+.store-text small { display: block; font-size: 11px; opacity: .6; }
+.store-text strong { display: block; font-size: 16px; font-weight: 800; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; max-width: 540px; }
+.contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; text-align: center; text-decoration: none; transition: transform .2s,border-color .2s; display: block; }
+.contact-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.contact-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+.contact-title { font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+.contact-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* FOOTER */
+footer { background: var(--ink); color: #ffffff60; padding: 40px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-size: 18px; font-weight: 900; color: #fff; letter-spacing: -1px; text-decoration: none; }
+.footer-logo span { color: var(--accent); }
+.footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+.footer-links a { color: #ffffff60; text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: #fff; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .steps-grid { grid-template-columns: repeat(2,1fr); }
+  .step-arrow { display: none; }
+  .earn-grid { grid-template-columns: repeat(2,1fr); }
+  .wd-grid { grid-template-columns: repeat(2,1fr); }
+  .wd-steps { grid-template-columns: repeat(3,1fr); }
+  .wd-steps::before { display: none; }
+  .timing-grid { grid-template-columns: 1fr; }
+  .earn-detail-grid { grid-template-columns: 1fr; }
+  .ref-wrap { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: block; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .earn-grid { grid-template-columns: 1fr; }
+  .wd-grid { grid-template-columns: 1fr; }
+  .wd-steps { grid-template-columns: repeat(2,1fr); }
+  .wd-steps::before { display: none; }
+  .timing-grid { grid-template-columns: 1fr; }
+  .stats-bar { gap: 40px; padding: 40px 20px; }
+  .sw, #download, #cta { padding: 60px 20px; }
+  .swd { padding: 60px 20px; }
+  .fb-1,.fb-2,.fb-3 { display: none; }
+  footer { padding: 32px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Fil<span>q</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#earn-section">Earn</a></li>
+    <li><a href="#withdraw">Withdraw</a></li>
+    <li><a href="#contact">Support</a></li>
+    <li><a href="/app-download" class="nav-cta">Download →</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleNav()">☰</button>
+</nav>
+
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#how" onclick="closeNav()">How it Works</a>
+  <a href="#earn-section" onclick="closeNav()">Earn</a>
+  <a href="#withdraw" onclick="closeNav()">Withdraw</a>
+  <a href="#contact" onclick="closeNav()">Support & Contact</a>
+  <a href="/app-download" onclick="closeNav()">Download</a>
+</div>
+
+<section id="hero">
+  <div class="hero-tag"><span class="hero-dot"></span>India's fastest growing earning app</div>
+  <h1 class="hero-h1">Earn real money<br>doing <em>simple tasks</em></h1>
+  <p class="hero-sub">Watch ads, complete offers, refer friends — withdraw directly to UPI or bank. Simple, fast, real.</p>
+  <div class="hero-btns">
+    <a href="/app-download" class="btn-primary">Start Earning Now →</a>
+    <a href="#how" class="btn-secondary">See How It Works ↓</a>
+  </div>
+  <div class="hero-phone">
+    <div class="float-badge fb-1">💸 ₹470 withdrawn today</div>
+    <div class="float-badge fb-2">🎯 Task completed +5000 coins</div>
+    <div class="float-badge fb-3">👥 Referral bonus +₹20</div>
+    <div class="phone-wrap"><div class="phone-screen">
+      <div class="phone-notch"></div>
+      <div class="app-bar"><span class="app-logo-s">Filq</span><span class="coin-pill">🪙 1,240</span></div>
+      <div class="balance-box">
+        <div class="bal-label">Total Balance</div>
+        <div class="bal-amount">₹1240</div>
+        <div class="bal-sub">1,240 coins · Ready to withdraw</div>
+      </div>
+      <div class="task-row"><div class="task-icon" style="background:#1e3a2a">📺</div><div style="flex:1"><div class="task-name">Watch Video Ad</div><div class="task-coins">+5 coins per ad</div></div><div class="task-btn">Watch</div></div>
+      <div class="task-row"><div class="task-icon" style="background:#2a1e3a">🎮</div><div style="flex:1"><div class="task-name">Complete Offer</div><div class="task-coins">Up to +500 coins</div></div><div class="task-btn">Go</div></div>
+      <div class="task-row"><div class="task-icon" style="background:#3a2a1e">👥</div><div style="flex:1"><div class="task-name">Refer a Friend</div><div class="task-coins">+50 coins per referral</div></div><div class="task-btn">Share</div></div>
+    </div></div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div><div class="stat-num">50K+</div><div class="stat-label">Active users</div></div>
+  <div><div class="stat-num">₹2L+</div><div class="stat-label">Paid out total</div></div>
+  <div><div class="stat-num">4.8★</div><div class="stat-label">App rating</div></div>
+  <div><div class="stat-num">24hr</div><div class="stat-label">Withdrawal time</div></div>
+</div>
+
+<div class="ticker-wrap"><div class="ticker">
+  <span>💰 <strong>Earn with Ads</strong></span><span>🎯 <strong>Complete Tasks</strong></span><span>👥 <strong>Refer & Earn</strong></span><span>🏦 <strong>UPI Withdrawal</strong></span><span>🔒 <strong>100% Secure</strong></span><span>⚡ <strong>Instant Coins</strong></span><span>🎁 <strong>Daily Bonuses</strong></span>
+  <span>💰 <strong>Earn with Ads</strong></span><span>🎯 <strong>Complete Tasks</strong></span><span>👥 <strong>Refer & Earn</strong></span><span>🏦 <strong>UPI Withdrawal</strong></span><span>🔒 <strong>100% Secure</strong></span><span>⚡ <strong>Instant Coins</strong></span><span>🎁 <strong>Daily Bonuses</strong></span>
+</div></div>
+
+<!-- HOW IT WORKS -->
+<div id="how"><div class="sw">
+  <div class="eyebrow">How It Works</div>
+  <div class="sh2">4 steps to start <em>earning</em></div>
+  <div class="steps-grid">
+    <div class="step-card"><div class="step-num">1</div><span class="step-icon">📲</span><div class="step-title">Download & Register</div><div class="step-desc">Download the Filq APK and create your free account in under 2 minutes. No credit card needed.</div><div class="step-arrow">→</div></div>
+    <div class="step-card"><div class="step-num">2</div><span class="step-icon">🎯</span><div class="step-title">Pick a Task</div><div class="step-desc">Watch ads, complete offerwall tasks, or invite friends. New tasks reload every day.</div><div class="step-arrow">→</div></div>
+    <div class="step-card"><div class="step-num">3</div><span class="step-icon">🪙</span><div class="step-title">Stack Coins</div><div class="step-desc">Every action earns coins. Coins never expire. Stack them up and watch your balance grow.</div><div class="step-arrow">→</div></div>
+    <div class="step-card"><div class="step-num">4</div><span class="step-icon">💸</span><div class="step-title">Withdraw to UPI</div><div class="step-desc">Convert coins to real INR. Withdraw via UPI or direct bank transfer, anytime.</div></div>
+  </div>
+</div></div>
+
+<!-- EARN -->
+<div id="earn-section"><div class="sw" style="padding-top:0">
+  <div class="eyebrow">Ways to Earn</div>
+  <div class="sh2">Multiple ways to earn <em>more</em></div>
+  <div class="earn-grid">
+    <div class="earn-card g"><span class="earn-emoji">📺</span><div class="earn-title">Watch Video Ads</div><div class="earn-desc">Watch short rewarded video ads and earn coins instantly. Up to 20 ads per day.</div><div class="earn-badge">+5 coins / ad</div></div>
+    <div class="earn-card o"><span class="earn-emoji">🎮</span><div class="earn-title">Offerwall Tasks</div><div class="earn-desc">Install apps, sign up for services, complete surveys — big rewards for easy actions.</div><div class="earn-badge">Up to +500 coins</div></div>
+    <div class="earn-card b"><span class="earn-emoji">👥</span><div class="earn-title">Refer Friends</div><div class="earn-desc">Share your unique code. Get bonus coins when a friend joins and starts earning.</div><div class="earn-badge">+50 coins / friend</div></div>
+    <div class="earn-card p"><span class="earn-emoji">📅</span><div class="earn-title">Daily Login</div><div class="earn-desc">Log in every day to claim your daily bonus. Build streaks, earn more.</div><div class="earn-badge">+10 coins / day</div></div>
+    <div class="earn-card y"><span class="earn-emoji">✅</span><div class="earn-title">Daily Tasks</div><div class="earn-desc">Fresh tasks every day — tap, watch, complete. New missions every midnight.</div><div class="earn-badge">+15 to +50 coins</div></div>
+    <div class="earn-card r"><span class="earn-emoji">🖼️</span><div class="earn-title">Profile Tasks</div><div class="earn-desc">Complete your profile with avatar and bio — earn one-time bonus coins instantly.</div><div class="earn-badge">+30 coins</div></div>
+  </div>
+  <div style="margin-top:80px">
+    <div class="eyebrow">Earning Guide</div>
+    <div class="sh2">How to earn, <em>step by step</em></div>
+    <div class="earn-detail-grid">
+      <div class="edc">
+        <div class="edc-head"><div class="edc-ico" style="background:#e8f8ef">📺</div><div><div class="edc-title">Watch Video Ads</div><div class="edc-sub">Easiest daily coins</div></div></div>
+        <ul class="edc-list">
+          <li><span class="edc-dot"></span><span>Open the app and go to the <strong>Earn</strong> tab</span></li>
+          <li><span class="edc-dot"></span><span>Tap <strong>"Watch Ad"</strong> — a rewarded video plays</span></li>
+          <li><span class="edc-dot"></span><span>Watch the full ad (usually 15–30 seconds)</span></li>
+          <li><span class="edc-dot"></span><span>Coins credited instantly after watching</span><span class="edc-coins">+5 coins</span></li>
+          <li><span class="edc-dot"></span><span>Repeat up to 20 times per day</span><span class="edc-coins">Max +100/day</span></li>
+        </ul>
+      </div>
+      <div class="edc">
+        <div class="edc-head"><div class="edc-ico" style="background:#fff4ee">🎮</div><div><div class="edc-title">Offerwall — Install Apps</div><div class="edc-sub">Highest paying tasks</div></div></div>
+        <ul class="edc-list">
+          <li><span class="edc-dot"></span><span>Go to the <strong>Offerwall</strong> section in the app</span></li>
+          <li><span class="edc-dot"></span><span>Browse available offers — apps, games, signups</span></li>
+          <li><span class="edc-dot"></span><span>Tap an offer and follow the instructions carefully</span></li>
+          <li><span class="edc-dot"></span><span>Install the app or complete the required action</span></li>
+          <li><span class="edc-dot"></span><span>Coins credited once verified (usually minutes)</span><span class="edc-coins">Up to +500</span></li>
+        </ul>
+      </div>
+      <div class="edc">
+        <div class="edc-head"><div class="edc-ico" style="background:#eff5ff">👥</div><div><div class="edc-title">Refer & Earn</div><div class="edc-sub">Earn for every invite</div></div></div>
+        <ul class="edc-list">
+          <li><span class="edc-dot"></span><span>Open app and go to <strong>Referral</strong> section</span></li>
+          <li><span class="edc-dot"></span><span>Copy your unique referral code or share link</span></li>
+          <li><span class="edc-dot"></span><span>Friend downloads Filq and registers with your code</span></li>
+          <li><span class="edc-dot"></span><span>Your friend gets a welcome bonus</span><span class="edc-coins">+500 coins</span></li>
+          <li><span class="edc-dot"></span><span>You earn your referral bonus instantly</span><span class="edc-coins">+1000 coins</span></li>
+        </ul>
+      </div>
+      <div class="edc">
+        <div class="edc-head"><div class="edc-ico" style="background:#fffbea">✅</div><div><div class="edc-title">Daily Tasks & Login</div><div class="edc-sub">Free coins every day</div></div></div>
+        <ul class="edc-list">
+          <li><span class="edc-dot"></span><span>Simply <strong>log in daily</strong> to claim your login bonus</span><span class="edc-coins">+10 coins</span></li>
+          <li><span class="edc-dot"></span><span>Check the <strong>Tasks</strong> tab for daily missions</span></li>
+          <li><span class="edc-dot"></span><span>Complete each task to earn its reward</span></li>
+          <li><span class="edc-dot"></span><span>Tasks reset every midnight (UTC)</span></li>
+          <li><span class="edc-dot"></span><span>Weekly tasks give bigger rewards — check Mondays</span><span class="edc-coins">Up to +200</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- WITHDRAW -->
+<div id="withdraw"><div class="swd"><div class="swdi">
+  <div class="eyebrow-w">Withdrawal</div>
+  <div class="sh2w">Your money, your <em>way</em></div>
+  <div class="wd-steps">
+    <div class="wd-step"><div class="wd-step-circle">🪙</div><div class="wd-step-title">Earn Coins</div><div class="wd-step-sub">Complete tasks</div></div>
+    <div class="wd-step"><div class="wd-step-circle">💳</div><div class="wd-step-title">Reach Minimum</div><div class="wd-step-sub">500 coins = ₹5</div></div>
+    <div class="wd-step"><div class="wd-step-circle">📱</div><div class="wd-step-title">Enter Details</div><div class="wd-step-sub">UPI or bank</div></div>
+    <div class="wd-step"><div class="wd-step-circle">✅</div><div class="wd-step-title">Submit Request</div><div class="wd-step-sub">Tap Withdraw</div></div>
+    <div class="wd-step"><div class="wd-step-circle">💸</div><div class="wd-step-title">Get Paid</div><div class="wd-step-sub">In your account</div></div>
+  </div>
+  <div class="wd-grid" style="margin-top:48px">
+    <div class="wd-card"><span class="wd-icon">📱</span><div class="wd-title">UPI Transfer</div><div class="wd-desc">Send to any UPI ID — PhonePe, GPay, Paytm, BHIM. Fastest withdrawal method.</div><span class="wd-min">Min 500 coins (₹5)</span></div>
+    <div class="wd-card"><span class="wd-icon">🏦</span><div class="wd-title">Bank Transfer</div><div class="wd-desc">Direct to your savings or current account. Enter your account number and IFSC code.</div><span class="wd-min">Min 500 coins (₹5)</span></div>
+    <div class="wd-card"><span class="wd-icon">🪙</span><div class="wd-title">Coins to Cash Rate</div><div class="wd-desc">100 coins = ₹1. No hidden fees, no deductions. What you see is what you get.</div><span class="wd-min">Max 50,000 coins / request</span></div>
+  </div>
+  <div class="timing-grid">
+    <div class="timing-card"><span class="tc-icon">📱</span><div><div class="tc-method">UPI Transfer</div><div class="tc-time">PhonePe, GPay, Paytm, BHIM</div></div><span class="tc-badge">Within 24hrs</span></div>
+    <div class="timing-card"><span class="tc-icon">🏦</span><div><div class="tc-method">Bank Transfer</div><div class="tc-time">All Indian banks supported</div></div><span class="tc-badge">1–2 business days</span></div>
+    <div class="timing-card"><span class="tc-icon">🔄</span><div><div class="tc-method">Rejected Refund</div><div class="tc-time">Coins returned if request fails</div></div><span class="tc-badge">Instant</span></div>
+  </div>
+</div></div></div>
+
+<!-- REFERRAL -->
+<div id="referral"><div class="sw">
+  <div class="ref-wrap">
+    <div class="ref-text">
+      <div class="eyebrow">Referral Program</div>
+      <h2>Earn <em>more</em><br>by sharing</h2>
+      <p>Invite friends and family to Filq. Every friend who joins with your code earns you both bonus coins — instantly.</p>
+      <div class="ref-nums">
+        <div><div class="ref-num">+1000</div><div class="ref-num-label">coins you earn per referral</div></div>
+        <div><div class="ref-num">+500</div><div class="ref-num-label">coins your friend gets too</div></div>
+      </div>
+      <a href="/app-download" class="btn-primary">Invite Friends & Earn →</a>
+    </div>
+    <div class="ref-visual">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Your referral code</p>
+      <div class="ref-code-wrap"><span class="ref-code">FILQ7X9K</span><button class="copy-btn" onclick="navigator.clipboard.writeText('FILQ7X9K');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button></div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Recent referrals</p>
+      <div class="ref-friend"><div class="rf-avatar">A</div><div style="flex:1"><div class="rf-name">Arjun S.</div><div class="rf-time">2 hours ago</div></div><div class="rf-coins">+1000 🪙</div></div>
+      <div class="ref-friend"><div class="rf-avatar" style="background:#7c6aff">P</div><div style="flex:1"><div class="rf-name">Priya M.</div><div class="rf-time">Yesterday</div></div><div class="rf-coins">+1000 🪙</div></div>
+      <div class="ref-friend" style="border:none"><div class="rf-avatar" style="background:#ff6b35">R</div><div style="flex:1"><div class="rf-name">Rahul K.</div><div class="rf-time">3 days ago</div></div><div class="rf-coins">+1000 🪙</div></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- CONTACT -->
+<div id="contact"><div class="sw" style="padding-top:0">
+  <div class="eyebrow">Support & Contact</div>
+  <div class="sh2">We're here to <em>help</em></div>
+  <div class="contact-grid">
+    <a href="https://t.me/filq_support" target="_blank" class="contact-card">
+      <span class="contact-icon">💬</span>
+      <div class="contact-title">Filq Support</div>
+      <div class="contact-desc">Got an issue or question? Chat with our support team on Telegram. We respond fast.</div>
+    </a>
+    <a href="https://t.me/filq_contact" target="_blank" class="contact-card">
+      <span class="contact-icon">✈️</span>
+      <div class="contact-title">Contact Us</div>
+      <div class="contact-desc">Business enquiries, partnerships, or general feedback — reach us on Telegram.</div>
+    </a>
+  </div>
+</div></div>
+
+<!-- CTA -->
+<section id="cta">
+  <h2>Ready to start <em>earning?</em></h2>
+  <p>Join 50,000+ Indians already earning with Filq. Free forever.</p>
+  <div class="cta-btns">
+    <a href="/app-download" class="btn-white">Download Filq →</a>
+    <a href="#how" class="btn-ghost-w">See How It Works ↓</a>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section id="download">
+  <div class="eyebrow" style="text-align:center">Download</div>
+  <div class="sh2" style="text-align:center;margin-bottom:12px">Get Filq on<br><em>your phone</em></div>
+  <p style="text-align:center;color:var(--muted);font-size:15px">Android only · Free forever · No subscriptions</p>
+  <div class="store-btns">
+    <a href="/app-download" class="store-btn">
+      <span class="store-icon">📦</span>
+      <div class="store-text"><small>Download</small><strong>APK Direct</strong></div>
+    </a>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:20px">Enable "Install from unknown sources" in Android settings before installing</p>
+</section>
+
+<footer>
+  <a class="footer-logo" href="/">Fil<span>q</span></a>
+  <ul class="footer-links">
+    <li><a href="/privacy">Privacy Policy</a></li>
+    <li><a href="/terms">Terms of Service</a></li>
+    <li><a href="/finance">Finance</a></li>
+    <li><a href="/developer">Developer</a></li>
+    <li><a href="/support">Support ✈️</a></li>
+  </ul>
+  <div>© 2025 Filq. All rights reserved.</div>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('mobile-nav').classList.toggle('open'); }
+function closeNav() { document.getElementById('mobile-nav').classList.remove('open'); }
+</script>
+</body>
+</html>
